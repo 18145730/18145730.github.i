@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Heroe escape</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="manifest" href="manifest.webmanifest">
+
+
+
+  <!-- Hoja de estilos -->
+  <link rel="stylesheet" href="materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+
+  <link rel="shortcut icon" href="icon-192x192.png" type="image/x-icon">
+
+  <script src="js/howler.core.js"></script>
+  <script src='js/juego.js'></script>
+  <style>
+    @font-face {
+      font-family: "fuente";
+      src: url("PressStart2P.woff") format("woff"), url("PressStart2P.ttf") format("truetype")
+    }
+
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+
+
+      font-family: fuente !important;
+      /*background-image: repeating-linear-gradient(257deg, rgba(237, 237, 237, 0.12) 0px, transparent 2px, rgba(36, 88, 148, 0.12) 5px, transparent 9px, hsla(20, 0%, 93%, 0.12) 12px), repeating-linear-gradient(152deg, hsla(20, 0%, 93%, 0.12) 0px, transparent 2px, hsla(20, 0%, 93%, 0.12) 5px, transparent 9px, hsla(20, 0%, 93%, 0.12) 12px), repeating-linear-gradient(222deg, hsla(20, 0%, 93%, 0.12) 0px, transparent 2px, hsla(20, 0%, 93%, 0.12) 5px, transparent 9px, hsla(20, 0%, 93%, 0.12) 12px), linear-gradient(90deg, rgb(37, 37, 37), rgb(37, 37, 37));
+      height: 100vh;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .nes-btn.is-primary {
+      width: 30%;*/
+    }
+  </style>
+  
+
+</head>
+
+<body onload='inicializa();'>
+
+  <center> 
+    <h5 style="background-color:rgb(35, 87, 76);"> LABERINTO</h5>
+    <h5 style="background-color:rgb(35, 87, 76);">Ortiz Ramos Frida</h5>
+    <body background="img/ani.gif">
+    </center>
+    
+     
+     
+
+  <div class="fixed-action-btn horizontal" style="position: absolute; display: inline-block; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">Menu</i>
+    </a>
+    <ul>
+      <li>
+        <a class="btn-floating blue-grey darken-1" onclick="cambiaStilo(1);">
+          <i class="material-icons">filter_1</i>
+        </a>
+      </li>
+      <li>
+        <a class="btn-floating blue-grey darken-1" onclick="cambiaStilo(2);">
+          <i class="material-icons">filter_2</i>
+        </a>
+      </li>
+      <li>
+        <a class="btn-floating blue-grey darken-1" onclick="cambiaStilo(3);">
+          <i class="material-icons">filter_3</i>
+        </a>
+      </li>
+      <li>
+        <a class="btn-floating blue-grey darken-1" onclick="cambiaStilo(Math.floor(Math.random()*3));">
+          <i class="material-icons">shuffle</i>
+        </a>
+      </li>
+      <li>
+        <a class="btn-floating blue modal-trigger" href="#modal1">
+          <i class="material-icons">help_outline</i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+
+  <br>
+  <div class=" container">
+    <center>
+      <canvas id='canvas' width='750' height='500' class="nes-container is-dark"></canvas>
+    </center>
+
+
+    <div class="fila">
+
+      <div clase="col s6 m6">
+        <div class="card nes-container green with-title">
+          <p class="title">Nivel</p>
+          <div class=" texto blanco de contenidode tarjeta">
+            <h5 class="center" id="nivel"></h5>
+            <Progress Class="NES-Progress" Value="1" Max="8"></Progress>
+          </Div>
+
+        </Div>
+      </Div>
+      <div clase="col s6 m6">
+        <div class="card nes-container green with-title">
+          <p class="title">Maximo</p>
+          <div class=" texto blanco de contenidode tarjeta">
+
+            <h5 class="center" id="maximo"></h5>
+            <Progress Class="NES-Progress" Value="3" Max="8"></Progress>
+          </Div>
+
+
+        </Div>
+      </Div>
+    </Div>
+
+        
+
+    <div id="botones" style="display: none;">
+      <center>
+        <div class="row">
+          <button type="button" class="nes-btn is-primary" onclick=" protagonista.arriba();">
+            <i class="material-icons">
+              arrow_upward
+            </i>
+          </button>
+
+        </div>
+        <div class="row">
+          <button type="button" class="nes-btn is-primary" onclick="protagonista.izquierda();">
+            <i class="material-icons">arrow_back</i>
+          </button>
+          <button type="button" class="nes-btn is-disabled"><i class="material-icons">add</i></button>
+          <button type="button" class="nes-btn is-primary" onclick=" protagonista.derecha();">
+            <i class="material-icons">arrow_forward</i>
+          </button>
+
+        </div>
+        <div class="row">
+          <button type="button" class="nes-btn is-primary" onclick="protagonista.abajo();">
+            <i class="material-icons">arrow_downward</i>
+          </button>
+        </div>
+      </center>
+
+    </div>
+
+
+
+  </div> <!-- finaliza container -->
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>WELCOM!!!</h4>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet minima officiis ipsa quis, deleniti dicta
+        asperiores eum nulla, qui quae quisquam excepturi. Non assumenda eum sequi quaerat ex inventore modi.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Empezar</a>
+    </div>
+  </div>
+
+
+
+
+  <!-- script materialize.css -->
+  <script src="materialize.min.js"></script>
+
+  <script>
+    M.AutoInit();
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems, options);
+    });
+
+    navegador = navigator.userAgent;
+    moviles = ["Mobile", "iPhone", "iPod", "BlackBerry", "Opera Mini", "Sony", "MOT", "Nokia", "Samsung"];
+    detector = 0;
+    for (i in moviles) {
+      compruebo = navegador.indexOf(moviles[i])
+      if (compruevo > -1) {
+        detector = 1;
+
+      }
+    }
+    if (detector == 1) {
+      document.getElementById('canvas').style.zoom = "40%";
+      document.getElementById('botones').style.display=" ";
+    }
+
+
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      console.log("El Navegador admite service workers");
+      window.addEventListener('load', function () {
+        //navigator.serviceWorker.register('sw_offlinepage.js')
+        //navigator.serviceWorker.register('sw_offlinesite.js')
+        navigator.serviceWorker.register('js/generate-sw.js')
+
+          .then(function (registration) {
+            console.log('Service worker registrado de modo correcto');
+            console.log('Scope: ' + registration.scope)
+          }, function (error) {
+            console.log('El registro del Service worker ha fallado');
+            console.log(error)
+          });
+      });
+    }
+  </script>
+</body>
+
+</html>
